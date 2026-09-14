@@ -1,6 +1,6 @@
 # rust-null
 
-Linux `/dev/null` 的用户态模型，目标是做成 Rust-for-Linux 的 `/dev/rust-null`。
+Linux `/dev/null` 的用户态模型，以及合同相同的 misc 设备 `/dev/rust-null`。边学 [Rust for Linux](https://rust-for-linux.com) 边写。
 
 [English](README.md)
 
@@ -10,10 +10,10 @@ Linux `/dev/null` 的用户态模型，目标是做成 Rust-for-Linux 的 `/dev/
 git clone https://github.com/hareai/rust-null.git
 cd rust-null
 cargo test
-echo hello | cargo run --example discard
+echo hello | cargo run -p rust-null --example discard
 ```
 
-需要 Rust 1.80 或更新。`cargo test` 只验证用户态合同，不会加载内核模块。
+需要 Rust 1.80 或更新。`cargo test` 只验证用户态合同，不会加载内核模块。没有 `/dev/rust-null` 时，设备对比测试会跳过。
 
 ## 用法
 
@@ -37,11 +37,22 @@ assert_eq!(n.read(&mut buf).unwrap(), 0);   // EOF，缓冲区不动
 
 最后一行容易踩：`/dev/null` 上的 `lseek` 永远返回 `0`，包括 `SEEK_END`。
 
-## 路线
+## 目录
 
-1. **用户态**（当前树）— `NullDevice` + 合同测试。
-2. **Rust for Linux** — 对着 `CONFIG_RUST=y` 的内核做 out-of-tree 模块。
-3. **`/dev/rust-null`** — 同样 read/write/llseek 合同的 misc 设备。
+```text
+userspace/   NullDevice crate 和合同测试
+kernel/      可加载的 misc 设备（C）和 RfL 源码（这里不编）
+```
+
+C 模块用 `misc_register` 注册名为 `rust-null` 的 misc 设备（主设备号 10，动态次设备号），`file_operations` 抄 `null_fops`。这就是 Rust-for-Linux `MiscDevice` 封装的那条 VFS 路径。
+
+```bash
+make -C kernel            # 需要正在运行的内核的 linux-headers
+# make -C kernel load     # insmod；只在打算测试的机器上
+RUST_NULL_REQUIRE_DEV=1 cargo test -p rust-null --test compare_devices --locked
+```
+
+发行核没有 `CONFIG_RUST=y` 时编不了 `kernel/rfl/rust_null.rs`。那是给自己编的 Rust 内核用的 out-of-tree 模块（`make LLVM=1`）。
 
 ## 许可证
 
