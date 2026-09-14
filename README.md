@@ -1,6 +1,6 @@
 # rust-null
 
-A userspace model of Linux `/dev/null`, plus a misc device `/dev/rust-null` with the same I/O contract.
+A userspace model of Linux `/dev/null`, plus a misc device `/dev/rust-null` with the same I/O contract. Work in progress, written while learning [Rust for Linux](https://rust-for-linux.com).
 
 [简体中文](README.zh-CN.md)
 

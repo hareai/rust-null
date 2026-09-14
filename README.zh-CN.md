@@ -1,6 +1,6 @@
 # rust-null
 
-Linux `/dev/null` 的用户态模型，以及合同相同的 misc 设备 `/dev/rust-null`。
+Linux `/dev/null` 的用户态模型，以及合同相同的 misc 设备 `/dev/rust-null`。边学 [Rust for Linux](https://rust-for-linux.com) 边写。
 
 [English](README.md)
 
