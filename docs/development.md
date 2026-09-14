@@ -15,6 +15,14 @@ cargo clippy --all-targets --locked -- -D warnings
 cargo test --locked
 ```
 
+Optional, when `linux-headers-$(uname -r)` is installed:
+
+```bash
+make -C kernel
+```
+
+Do not `make -C kernel load` unless the owner asked to test `/dev/rust-null` on that machine.
+
 Public GitHub repos: `git config hermes.public true`. Do not commit `.env`, live keys, or household/private domains (history counts). Private repos are exempt.
 
 ## PR gate

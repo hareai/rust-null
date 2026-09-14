@@ -11,3 +11,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versio
 - Userspace `NullDevice` matching Linux `/dev/null` (`read` EOF, `write` discard, `lseek` always 0).
 - Contract tests against `drivers/char/mem.c` helpers `read_null`, `write_null`, and `null_lseek`.
 - `examples/discard` stdin sink.
+- C misc module `kernel/rust_null.c` (`misc_register`, `/dev/rust-null`) with the same fops contract.
+- Rust-for-Linux `MiscDevice` source in `kernel/rfl/` (not built against distro headers).
+- `/dev/null` vs `/dev/rust-null` tests (`compare_devices`); skip when the node is missing.
+
+### Changed
+
+- Crate lives under `userspace/`; repository root is a Cargo workspace.

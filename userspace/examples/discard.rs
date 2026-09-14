@@ -1,7 +1,7 @@
 //! Read stdin, discard it the same way `/dev/null` would.
 //!
 //! ```bash
-//! echo hello | cargo run --example discard
+//! echo hello | cargo run -p rust-null --example discard
 //! ```
 
 use std::io::{self, Read, Write};

@@ -8,7 +8,7 @@ This file is binding for AI coding agents working in this repository.
 - Confirm the task, acceptance criteria, target branch, and files in scope.
 - Do not guess kernel API, license text, or release intent.
 - Do not work directly on `main` unless the owner explicitly authorizes an emergency fix.
-- Userspace (`src/`, `tests/`) is the current product. Kernel / Rust-for-Linux work stays out of this tree until a later phase.
+- Userspace lives in `userspace/`. The loadable distro module is `kernel/rust_null.c`. `kernel/rfl/rust_null.rs` is RfL source for a `CONFIG_RUST=y` kernel and is not built by `make -C kernel`.
 
 ## During editing
 
@@ -21,7 +21,7 @@ This file is binding for AI coding agents working in this repository.
 ## Before commit / push / merge
 
 - Review the complete diff and scan for secrets, conflict markers, TODO/FIXME, debug output, and accidental files.
-- Run `cargo fmt --check`, `cargo clippy --all-targets --locked -- -D warnings`, and `cargo test --locked`.
+- Run `cargo fmt --check`, `cargo clippy --all-targets --locked -- -D warnings`, and `cargo test --locked` from the repository root.
 - New failures block the commit. Do not hide failures as warnings.
 - Use a focused Conventional Commit: `type(scope): imperative summary`.
 - Push a branch and use a PR. Do not bypass required checks.
@@ -30,4 +30,6 @@ This file is binding for AI coding agents working in this repository.
 
 ## Stop conditions
 
-Stop and ask when scope, destructive action, public behavior, credentials, or factual copy is unclear. Block when security, correctness, required checks, or release prerequisites fail. Do not `insmod` / `rmmod` / build against a live kernel without an explicit owner order.
+Stop and ask when scope, destructive action, public behavior, credentials, or factual copy is unclear. Block when security, correctness, required checks, or release prerequisites fail.
+
+Do not `insmod` / `rmmod` / `make -C kernel load` without an explicit owner order. Do not compile or boot a replacement kernel, and do not treat distro `linux-headers` as sufficient to build `kernel/rfl/*.rs`.

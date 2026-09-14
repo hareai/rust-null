@@ -39,6 +39,7 @@ cargo fmt --check
 cargo clippy --all-targets --locked -- -D warnings
 cargo test --locked
 ./scripts/governance-check.sh
+# optional, needs linux-headers: make -C kernel
 ```
 
 ## Release

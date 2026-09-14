@@ -8,10 +8,10 @@
 //! | `write_null`    | return `count`. Discard the bytes.            |
 //! | `null_lseek`    | `file->f_pos = 0`; return `0`. Ignore whence. |
 //!
-//! This crate is the first step toward an out-of-tree Rust-for-Linux
-//! misc device registered as `/dev/rust-null`. The I/O contract stays
-//! the same when that module lands; only the transport changes
-//! (`std::io` here, `kernel::file` / `MiscDevice` there).
+//! This crate is the userspace model (`userspace/`). The matching misc
+//! device is `kernel/rust_null.c` (`/dev/rust-null`). The I/O contract
+//! stays the same; only the transport changes (`std::io` here,
+//! `file_operations` / RfL `MiscDevice` there).
 
 use std::io::{self, Read, Seek, SeekFrom, Write};
 

@@ -1,0 +1,15 @@
+[package]
+name = "rust-null"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+authors = ["evie <evie@hareai.dev>"]
+license = "GPL-2.0-only"
+description = "Userspace model of Linux /dev/null, plus a misc device /dev/rust-null."
+repository = "https://github.com/hareai/rust-null"
+readme = "../README.md"
+keywords = ["linux", "null", "kernel", "device"]
+categories = ["os"]
+publish = false
+
+[dependencies]
